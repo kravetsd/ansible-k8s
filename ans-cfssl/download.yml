@@ -1,0 +1,30 @@
+---
+
+- name: download cfssl tools
+  get_url:
+    url: "{{ item.value.url }}"
+    dest: "{{ cfssl_pkg_download_base_path }}/{{ item.key }}"
+    mode: 0755
+    owner: dkravets
+    group: dkravets
+    checksum: "sha256:{{ cfssl_pkg_download_checksum_url }}"
+  loop: "{{ lookup('dict', download_list) }}"
+
+  vars:
+    cfssl_pkg_download_base_version: 1.4.1
+    cfssl_pkg_download_base_os: linux
+    cfssl_pkg_download_base_path: /tmp
+    cfssl_pkg_download_base_architecture: amd64
+    cfssl_pkg_download_checksum_url: https://github.com/cloudflare/cfssl/releases/download/v{{cfssl_pkg_download_base_version}}/cfssl_{{ cfssl_pkg_download_base_version }}_checksums.txt
+    cfssl:
+      url: https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_pkg_download_base_version }}/cfssl_{{ cfssl_pkg_download_base_version }}_{{ cfssl_pkg_download_base_os }}_{{ cfssl_pkg_download_base_architecture }}
+      path: "{{ cfssl_pkg_download_base_path }}/cfssl"
+    cfssljson:
+      url: https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_pkg_download_base_version }}/cfssljson_{{ cfssl_pkg_download_base_version }}_{{ cfssl_pkg_download_base_os }}_{{ cfssl_pkg_download_base_architecture }}
+      path: "{{ cfssl_pkg_download_base_path }}/cfssljson"
+    download_list:
+      cfssl:
+        url: "{{ cfssl.url }}"
+      cfssljson:
+        url: "{{ cfssljson.url }}"
+
