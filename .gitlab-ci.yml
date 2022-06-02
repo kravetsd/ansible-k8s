@@ -11,10 +11,10 @@ variables:
     allow_failure: true
     script:
 
-        - ansible-playbook k8s-nodes.yaml -i $inventory
+        - ansible all -m ping -i $inventory
 
 deploy_dev:
     extends: .run_playbook
     variables:
-        inventory: inventory
+        inventory: k8s-nodes.yaml
     stage: test
