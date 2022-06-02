@@ -1,0 +1,13 @@
+all:
+  vars:
+    ansible_user: '{{ lookup("env", "ANSIBLE_USER") }}'
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  children:
+    masterNodes:
+      hosts:
+        master_node0:
+          ansible_host: 51.250.66.221
+    workerNodes:
+      hosts:
+        worker_node0:
+          ansible_host: 51.250.76.74
