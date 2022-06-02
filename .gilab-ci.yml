@@ -1,0 +1,16 @@
+image: registry.gitlab.com/torese/docker-ansible
+
+variables:
+    ANSIBLE_HOST_KEY_CHECKING: 'false'
+    ANSIBLE_FORCE_COLOR: 'true'
+
+.run_playbook:
+    allow_failure: true
+    script:
+
+        - ansible-playbook k8s-nodes.yaml -i $inventory
+
+deploy_dev:
+    extends: .run_playbook
+    variables:
+        inventory: inventory
