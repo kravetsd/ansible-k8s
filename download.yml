@@ -3,7 +3,7 @@
 - name: download cfssl tools
   get_url:
     url: "{{ item.value.url }}"
-    dest: "{{ cfssl_pkg_download_base_path }}/{{ item.key }}"
+    dest: "{{ local_base_path }}/{{ item.key }}"
     mode: 0755
     owner: dkravets
     group: dkravets
@@ -22,7 +22,7 @@
 - name: download kubectl
   get_url:
     url: "https://dl.k8s.io/release/v{{ kubectl_pkg_download_base_version }}/bin/{{ kubectl_pkg_download_base_os }}/{{ kubectl_pkg_download_base_architecture }}/kubectl"
-    dest: "{{ kubectl_pkg_download_base_path }}/kubectl"
+    dest: "{{ local_base_path }}/kubectl"
     mode: 0755
     owner: dkravets
     group: dkravets
@@ -31,7 +31,7 @@
 - name: Verify kubectl is installed
   command:
     cmd: ./kubectl version --client
-    chdir: /tmp
+    chdir: "{{ local_base_path }}"
   register: kubcetl_version
 
 - name: showing kubectl version

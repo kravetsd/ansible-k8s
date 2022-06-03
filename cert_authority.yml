@@ -1,0 +1,10 @@
+---
+- name: generate ca-config.json file 
+  template:
+    src: templates/ca-config.json.j2
+    dest: "{{ local_base_path }}/ca-config.json"
+
+- name: generate ca-csr.json file
+  template:
+    src: templates/ca-csr.json.j2
+    dest: "{{ local_base_path }}/ca-csr.json"

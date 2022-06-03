@@ -5,3 +5,6 @@
   tasks:
     - name: install client tools
       include_tasks: download.yml
+
+    - name: generate ca certs
+      include_tasks: cert_authority.yml

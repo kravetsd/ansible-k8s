@@ -1,7 +1,10 @@
+### general vars:
+local_base_path: /tmp
+
 ### cfssl related vars:
 cfssl_pkg_download_base_version: 1.4.1
 cfssl_pkg_download_base_os: linux
-cfssl_pkg_download_base_path: /tmp
+#cfssl_pkg_download_base_path:
 cfssl_pkg_download_base_architecture: amd64
 cfssl_pkg_download_checksum_url: https://github.com/cloudflare/cfssl/releases/download/v{{cfssl_pkg_download_base_version}}/cfssl_{{ cfssl_pkg_download_base_version }}_checksums.txt
 
@@ -25,3 +28,5 @@ ca_csr_location: Portland
 ca_csr_organization: Kubernetes
 ca_csr_algo: rsa
 ca_csr_size: 2048
+ca_csr_organization_unit: CA
+ca_csr_organization_state: Oregon
