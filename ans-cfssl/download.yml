@@ -16,15 +16,47 @@
     cfssl_pkg_download_base_path: /tmp
     cfssl_pkg_download_base_architecture: amd64
     cfssl_pkg_download_checksum_url: https://github.com/cloudflare/cfssl/releases/download/v{{cfssl_pkg_download_base_version}}/cfssl_{{ cfssl_pkg_download_base_version }}_checksums.txt
-    cfssl:
-      url: https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_pkg_download_base_version }}/cfssl_{{ cfssl_pkg_download_base_version }}_{{ cfssl_pkg_download_base_os }}_{{ cfssl_pkg_download_base_architecture }}
-      path: "{{ cfssl_pkg_download_base_path }}/cfssl"
-    cfssljson:
-      url: https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_pkg_download_base_version }}/cfssljson_{{ cfssl_pkg_download_base_version }}_{{ cfssl_pkg_download_base_os }}_{{ cfssl_pkg_download_base_architecture }}
-      path: "{{ cfssl_pkg_download_base_path }}/cfssljson"
+    # cfssl:
+    #   url: https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_pkg_download_base_version }}/cfssl_{{ cfssl_pkg_download_base_version }}_{{ cfssl_pkg_download_base_os }}_{{ cfssl_pkg_download_base_architecture }}
+    #   path: "{{ cfssl_pkg_download_base_path }}/cfssl"
+    # cfssljson:
+    #   url: https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_pkg_download_base_version }}/cfssljson_{{ cfssl_pkg_download_base_version }}_{{ cfssl_pkg_download_base_os }}_{{ cfssl_pkg_download_base_architecture }}
+    #   path: "{{ cfssl_pkg_download_base_path }}/cfssljson"
     download_list:
       cfssl:
-        url: "{{ cfssl.url }}"
+        url: https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_pkg_download_base_version }}/cfssl_{{ cfssl_pkg_download_base_version }}_{{ cfssl_pkg_download_base_os }}_{{ cfssl_pkg_download_base_architecture }}
       cfssljson:
-        url: "{{ cfssljson.url }}"
+        url: "https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_pkg_download_base_version }}/cfssljson_{{ cfssl_pkg_download_base_version }}_{{ cfssl_pkg_download_base_os }}_{{ cfssl_pkg_download_base_architecture }}"
+
+#https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256
+
+- name: getting checksum for a kubectl binary
+  uri:
+    url: "https://dl.k8s.io/release/v{{ kubectl_pkg_download_base_version }}/bin/{{ kubectl_pkg_download_base_os }}/{{ kubectl_pkg_download_base_architecture }}/kubectl.sha256"
+    return_content: true
+    # method: get
+    # body_format: json
+  vars:
+    kubectl_pkg_download_base_version: 1.21.0
+    kubectl_pkg_download_base_os: linux
+    kubectl_pkg_download_base_architecture: amd64
+    kubectl_pkg_download_base_path: /tmp
+    kubectl_pkg_download_checksum_url: "https://dl.k8s.io/release/v{{ kubectl_pkg_download_base_version }}/bin/{{ kubectl_pkg_download_base_os }}/{{ kubectl_pkg_download_base_architecture }}/kubectl.sha256"
+  register: "checksum_sha256"
+
+- name: download kubectl
+  get_url:
+    url: "https://dl.k8s.io/release/v{{ kubectl_pkg_download_base_version }}/bin/{{ kubectl_pkg_download_base_os }}/{{ kubectl_pkg_download_base_architecture }}/kubectl"
+    dest: "{{ kubectl_pkg_download_base_path }}/kubectl"
+    mode: 0755
+    owner: dkravets
+    group: dkravets
+    checksum: "sha256:{{ checksum_sha256.content }}"
+  vars:
+    kubectl_pkg_download_base_version: 1.21.0
+    kubectl_pkg_download_base_os: linux
+    kubectl_pkg_download_base_architecture: amd64
+    kubectl_pkg_download_base_path: /tmp
+    kubectl_pkg_download_checksum_url: "https://dl.k8s.io/release/v{{ kubectl_pkg_download_base_version }}/bin/{{ kubectl_pkg_download_base_os }}/{{ kubectl_pkg_download_base_architecture }}/kubectl.sha256"
+      
 

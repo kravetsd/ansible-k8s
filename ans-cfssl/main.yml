@@ -1,5 +1,5 @@
 ---
 - hosts: 127.0.0.1
   tasks:
-    - name: install
+    - name: install client tools
       include_tasks: download.yml
