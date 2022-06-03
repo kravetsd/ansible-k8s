@@ -1,0 +1,16 @@
+{
+  "CN": "{{ ca_csr_organization }}",
+  "key": {
+    "algo": "{{ ca_csr_algo }}",
+    "size": "{{ ca_csr_size }}"
+  },
+  "names": [
+    {
+      "C": "{{ ca_csr_country }}",
+      "L": "{{ ca_csr_location }}",
+      "O": "{{ ca_csr_organization }}",
+      "OU": "CA",
+      "ST": "Oregon"
+    }
+  ]
+}

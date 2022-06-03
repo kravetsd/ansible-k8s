@@ -1,4 +1,4 @@
-### cdssl related vars:
+### cfssl related vars:
 cfssl_pkg_download_base_version: 1.4.1
 cfssl_pkg_download_base_os: linux
 cfssl_pkg_download_base_path: /tmp
@@ -18,3 +18,10 @@ kubectl_pkg_download_base_architecture: amd64
 kubectl_pkg_download_base_path: /tmp
 kubectl_pkg_download_checksum_url: "https://dl.k8s.io/release/v{{ kubectl_pkg_download_base_version }}/bin/{{ kubectl_pkg_download_base_os }}/{{ kubectl_pkg_download_base_architecture }}/kubectl.sha256"
 
+### ca related varaibles:
+ca_config_signing_expiry: 8760h
+ca_csr_country: US
+ca_csr_location: Portland
+ca_csr_organization: Kubernetes
+ca_csr_algo: rsa
+ca_csr_size: 2048
