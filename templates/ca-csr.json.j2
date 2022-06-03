@@ -2,7 +2,7 @@
   "CN": "{{ ca_csr_organization }}",
   "key": {
     "algo": "{{ ca_csr_algo }}",
-    "size": "{{ ca_csr_size }}"
+    "size": {{ ca_csr_size | int }}
   },
   "names": [
     {

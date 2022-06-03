@@ -8,3 +8,18 @@
   template:
     src: templates/ca-csr.json.j2
     dest: "{{ local_base_path }}/ca-csr.json"
+
+- name: Check whether certificate and private key exist
+  stat:
+    path: '{{ item }}'
+  loop:
+    - "{{ local_base_path }}/ca.pem"
+    - "{{ local_base_path }}/ca-key.pem"
+  register: certs_exist
+
+- name: generate ca and private key to generate additional TLS certificates
+  shell:
+    cmd: "{{ local_base_path }}/cfssl gencert -initca ca-csr.json | {{ local_base_path }}/cfssljson -bare ca"
+    chdir: "{{ local_base_path }}"
+    warn: no
+  when: certs_exist.results | rejectattr('stat.exists') | list
