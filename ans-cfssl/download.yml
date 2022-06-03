@@ -58,5 +58,15 @@
     kubectl_pkg_download_base_architecture: amd64
     kubectl_pkg_download_base_path: /tmp
     kubectl_pkg_download_checksum_url: "https://dl.k8s.io/release/v{{ kubectl_pkg_download_base_version }}/bin/{{ kubectl_pkg_download_base_os }}/{{ kubectl_pkg_download_base_architecture }}/kubectl.sha256"
-      
+
+- name: Verify kubectl is installed
+  command:
+    cmd: ./kubectl version --client
+    chdir: /tmp
+  register: kubcetl_version
+
+- name: showing kubectl version
+  debug:
+    msg="{{ kubcetl_version.stdout }}"
+
 
