@@ -1,5 +1,7 @@
 ---
 - hosts: 127.0.0.1
+  vars_files:
+    - "vars/main.yml"
   tasks:
     - name: install client tools
       include_tasks: download.yml
